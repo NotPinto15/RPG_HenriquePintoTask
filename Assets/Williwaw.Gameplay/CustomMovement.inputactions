@@ -1,0 +1,34 @@
+{
+    "name": "CustomMovement",
+    "maps": [
+        {
+            "name": "MainMov",
+            "id": "7eec4b86-2aba-49b8-9322-9302e8a50fb0",
+            "actions": [
+                {
+                    "name": "Walk",
+                    "type": "Button",
+                    "id": "5d8eb9b7-8672-4949-9c96-d50917175bc0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "991637f2-822d-4e97-8ef3-58406945077b",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Walk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
