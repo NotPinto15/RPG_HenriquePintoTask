@@ -25,10 +25,17 @@ public class PlayerController : MonoBehaviour
     // Threshold distance to determine when the player is "close enough" to the target
     [SerializeField] float stopDistanceThreshold = 0.1f;
 
+    // Audio
+    [Header("Audio")]
+    [SerializeField] AudioClip walkClip; // Walking sound clip
+    [SerializeField] AudioClip idleClip; // Idle sound clip
+    private AudioSource audioSource;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>(); // Ensure AudioSource component is attached
 
         input = new CustomActions();
         AssignInputs();
@@ -79,6 +86,7 @@ public class PlayerController : MonoBehaviour
     {
         FaceTarget();
         SetAnimations();
+        HandleAudio();
     }
 
     // Rotate the player towards the movement direction
@@ -105,6 +113,31 @@ public class PlayerController : MonoBehaviour
         {
             // Play idle animation if the player has reached the destination or stopped moving
             animator.Play(IDLE);
+        }
+    }
+
+    // Handle audio based on movement
+    void HandleAudio()
+    {
+        if (agent.remainingDistance > stopDistanceThreshold && !agent.pathPending)
+        {
+            // If the player is walking and the walk sound is not playing, start playing it
+            if (!audioSource.isPlaying || audioSource.clip != walkClip)
+            {
+                audioSource.clip = walkClip;
+                audioSource.loop = true; // Loop the walking sound
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            // If the player is idle and the idle sound is not playing, play the idle sound
+            if (!audioSource.isPlaying || audioSource.clip != idleClip)
+            {
+                audioSource.clip = idleClip;
+                audioSource.loop = false; // Don't loop idle sound (play once)
+                audioSource.Play();
+            }
         }
     }
 }
